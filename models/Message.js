@@ -22,6 +22,7 @@ const Message = sequelize.define("message",{
         allowNull:false,
         defaultValue:0
     }
+    
 });
 
 module.exports = Message;

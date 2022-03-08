@@ -1,7 +1,8 @@
 const Message =require('../models/Message') ;
 const Likes =require('../models/Likes') ;
+const User =require('../models/User') ;
 const fs = require('fs');
-const Commentaire = require('../models/Commentaire');
+
 
 
 exports.createMessage = (req, res, next) => {
@@ -17,7 +18,7 @@ exports.createMessage = (req, res, next) => {
   };
 
   exports.getAllMessages = (req, res, next) => {
-    Message.findAll()
+    Message.findAll({ include: User })
     .then(mes => res.status(200).json(mes))
     .catch(error => res.status(400).json({ error }));
 
@@ -48,7 +49,7 @@ exports.createMessage = (req, res, next) => {
       .then(() => res.status(200).json({ message: 'Objet modifié !'}))
       .catch(error => res.status(400).json({ error }));
     }else{
-      res.status(401).json({ message:"vous n'etes pas authorisé à modifier cette sauce" });
+      res.status(401).json({ message:"vous n'etes pas authorisé à modifier ce message" });
     }
 
     })
@@ -69,7 +70,7 @@ exports.createMessage = (req, res, next) => {
           });
   
       }else{
-        res.status(401).json({ message:"vous n'etes pas authorisé à supprimer cette sauce" });
+        res.status(401).json({ message:"vous n'etes pas authorisé à supprimer ce message" });
       }
       })
       .catch(error => res.status(500).json({ error }));
@@ -121,40 +122,3 @@ exports.createMessage = (req, res, next) => {
     })
 
   };
-
-  exports.addComment = (req, res, next) => {
-    if (req.body.descriptif)
-    {Message.findOne({where:{  id: req.params.id }})
-    .then((message)=>{
-        {
-                Commentaire.create({descriptif:req.body.descriptif,userId:req.token.userId,messageId:req.params.id})
-                .then(() => {
-                    console.log('exécuté')
-                     });
-   
-        }
-    })}
-
-  };
-
-  exports.deleteComment = (req, res, next) => {
-    Commentaire.findOne({where:{  id: req.params.idComment }})
-    .then( (comment)=>{ 
-        if(comment.userId==req.token.userId)
-        {
-        Commentaire.destroy({where: { id: req.params.idComment }})
-        .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
-        .catch(error => res.status(400).json({ error }));
-      }
-    });
-
-
-    };
-
-    exports.allCommentsForOneMessage = (req, res, next) => {
-        Commentaire.findAll({where:{  messageId: req.params.id }})
-        .then(com => res.status(200).json(com))
-        .catch(error => res.status(400).json({ error }));
-    
-    
-        };

@@ -9,17 +9,14 @@ const message = require('./models/Message');
 const commentaire = require('./models/Commentaire');
 const likes = require('./models/Likes');
 
-console.log('san');
 user.hasMany(message);
-console.log('yon');
+message.belongsTo(user);
 message.hasMany(commentaire);
-console.log('go');
 user.hasMany(commentaire);
-console.log('nana');
+commentaire.belongsTo(user);
 message.hasMany(likes);
-console.log('roku');
 user.hasMany(likes);
-console.log('ni');
+
 sequelize
 .sync()
 .then((result)=>{
