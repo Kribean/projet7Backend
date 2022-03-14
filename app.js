@@ -17,6 +17,12 @@ commentaire.belongsTo(user);
 message.hasMany(likes);
 user.hasMany(likes);
 
+/*user.hasMany(likes,{
+  foreignKey: {
+    unique: true
+  }
+});*/
+
 sequelize
 .sync()
 .then((result)=>{

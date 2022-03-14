@@ -13,7 +13,14 @@ const Likes = sequelize.define("likes",{
         type: Sequelize.BOOLEAN,
         allowNull:false,
         defaultValue:false
+    },
+
+    uniqueMsgUsr:{
+        type: Sequelize.INTEGER,
+        unique: true,
     }
+
+
 });
 
 module.exports = Likes;
