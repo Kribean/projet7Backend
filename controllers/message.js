@@ -7,8 +7,10 @@ const fs = require('fs');
 
 exports.createMessage = (req, res, next) => {
 
-    console.log('tu es ici ou');
+  console.log(req.body.descriptif);
+
     Message.create({
+        userId: req.body.userID,
         descriptif: req.body.descriptif,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
     })
@@ -18,6 +20,7 @@ exports.createMessage = (req, res, next) => {
   };
 
   exports.getAllMessages = (req, res, next) => {
+      console.log('dow');
     Message.findAll({ include: User })
     .then(mes => res.status(200).json(mes))
     .catch(error => res.status(400).json({ error }));
