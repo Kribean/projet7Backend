@@ -16,7 +16,7 @@ const Likes = sequelize.define("likes",{
     },
 
     uniqueMsgUsr:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         unique: true,
     }
 
