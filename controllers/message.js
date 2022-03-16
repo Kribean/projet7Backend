@@ -19,6 +19,19 @@ exports.createMessage = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
+exports.createMessageWithoutImg = (req, res, next) => {
+  console.log(req.body.userId);
+  console.log('rueda');
+
+  Message.create({
+    userId: req.body.userId,
+    descriptif: req.body.descriptif,
+    imageUrl: 'NULL'
+  })
+    .then(() => res.status(201).json({ message: "Utilisateur créé sans image!" }))
+    .catch((error) => res.status(400).json({ error }));
+};
+
 exports.getAllMessages = (req, res, next) => {
   console.log("dow");
   Message.findAll({
@@ -96,7 +109,8 @@ exports.modifyMessage = (req, res, next) => {
               req.file.filename
             }`,
           }
-        : { ...req.body };
+        : {descriptif: req.body.descriptif,
+          imageUrl:NULL };
       Message.update(messageObject, { where: { id: req.params.id } })
         .then(() => res.status(200).json({ message: "Objet modifié !" }))
         .catch((error) => res.status(400).json({ error }));
@@ -106,6 +120,35 @@ exports.modifyMessage = (req, res, next) => {
         .json({ message: "vous n'etes pas authorisé à modifier ce message" });
     }
   });
+};
+
+exports.modifyMessageWithoutImg = (req, res, next) => {
+  console.log('tofu');
+  const messageObject ={
+    descriptif: req.body.descriptif,
+    imageUrl: 'NULL',
+  }
+  Message.update(messageObject, { where: { id: req.params.id, userId:req.token.userId } })
+  .then(() => res.status(200).json({ message: "Objet modifié !" }))
+  .catch((error) => res.status(400).json({ error }));
+
+  /*Message.findOne({ where: { id: req.params.id } }).then((message) => {
+    console.log('tofos');
+    if (message.userId == req.token.userId) {
+      const messageObject ={
+            descriptif: req.body.descriptif,
+            imageUrl: 'NULL',
+          }
+ 
+      Message.update(messageObject, { where: { id: req.params.id, userId:req.token.userId } })
+        .then(() => res.status(200).json({ message: "Objet modifié !" }))
+        .catch((error) => res.status(400).json({ error }));
+    } else {
+      res
+        .status(401)
+        .json({ message: "vous n'etes pas authorisé à modifier ce message" });
+    }
+  });*/
 };
 
 exports.deleteMessage = (req, res, next) => {

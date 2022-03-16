@@ -48,6 +48,8 @@ exports.login = (req, res, next) => {
             }
             res.status(200).json({
               pseudo:user.pseudo,
+              nom:user.nom,
+              prenom:user.prenom,
               userId: user.id,
               token: jwt.sign(
                   {userId:user.id},
@@ -64,6 +66,9 @@ exports.login = (req, res, next) => {
 
 
   exports.modifyProfil = (req, res, next) => {
+    console.log(req.body.nom);
+    console.log('toulouse');
+    console.log(req.body.pseudo);
     User.update(
         { nom: req.body.nom,
         prenom: req.body.prenom,

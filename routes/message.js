@@ -29,12 +29,15 @@ const storage = multer.diskStorage({
 
 //--------------------------------------------*/
 router.post("/add",auth, multer, messageCtrl.createMessage);
+router.post("/addWithoutImg",auth, messageCtrl.createMessageWithoutImg);
 router.get("/", auth, messageCtrl.getAllMessages);
 router.get("/:id", auth, messageCtrl.getOneMessage);
-router.put("/:id", auth, multer, messageCtrl.modifyMessage);
+router.put("/:id/modifyMessage", auth, multer, messageCtrl.modifyMessage);
+router.put("/:id/modifyMessageWithoutImg", auth, messageCtrl.modifyMessageWithoutImg);
 router.delete("/:id", auth, messageCtrl.deleteMessage);
 router.post("/:id/like", auth, messageCtrl.likeMessage);
 router.get("/:id/allComments", auth, commentaireCtrl.allCommentsForOneMessage);
 router.post("/:id/comments", auth, commentaireCtrl.addComment);
-router.delete("/comments/:idComment", auth, commentaireCtrl.deleteComment);
+router.delete("/comments/:idComment/deleted", auth, commentaireCtrl.deleteComment);
+router.put("/comments/:idComment/modified", auth, commentaireCtrl.modifyComment);
 module.exports = router;

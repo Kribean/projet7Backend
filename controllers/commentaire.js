@@ -32,9 +32,33 @@ const User =require('../models/User') ;
     };
 
     exports.allCommentsForOneMessage = (req, res, next) => {
-        Commentaire.findAll({ include: User },{where:{  messageId: req.params.id }})
-        .then(com => res.status(200).json(com))
+      console.log('st kit');
+      console.log(req.params.id);
+        Commentaire.findAll(
+          { where:{messageId: req.params.id },
+            include: [
+              {
+                model:User,
+                attributes:['id','pseudo','createdAt']
+              },
+              
+            ],
+          })
+        .then((com)=> {
+          console.log(com);
+          res.status(200).json(com)})
         .catch(error => res.status(400).json({ error }));
-    
-    
         };
+
+    exports.modifyComment = (req, res, next) =>{
+      
+      console.log('vin di mwen 1');
+      console.log(req.params.idComment);
+      console.log(req.token.userId);
+      console.log(req.body.descriptif);
+      Commentaire.update({descriptif:req.body.descriptif}, { where: { id: req.params.idComment, userId:req.token.userId } })
+      .then(() => {
+        console.log('vin di mwen 1');
+        return res.status(200).json({ message: "Objet modifié !" })})
+      .catch((error) => res.status(400).json({ error }));
+    }
