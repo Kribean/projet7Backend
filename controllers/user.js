@@ -75,12 +75,18 @@ exports.login = (req, res, next) => {
         pseudo: req.body.pseudo},
         { where: { id: req.token.userId } }
       )
-      .then(result =>{console.log('update réussi');}
+      .then(()=>{
+        res.status(200).json({ message: 'Objet modifié !'})
+      })
+      .catch((error)=>{
+        res.status(400).json({ error})
+      })
+      /*.then(result =>{console.log('update réussi');}
         
       )
       .catch(err =>
         {console.log('update échec');}
-      )    
+      )*/    
 };
 
 exports.deleteProfil = (req, res, next) => {

@@ -157,7 +157,7 @@ exports.deleteMessage = (req, res, next) => {
       if (message.userId == req.token.userId) {
         const filename = message.imageUrl.split("/images/")[1];
         fs.unlink(`images/${filename}`, () => {
-          Message.destroy({ where: { _id: req.params.id } })
+          Message.destroy({ where: { id: req.params.id } })
             .then(() => res.status(200).json({ message: "Objet supprimé !" }))
             .catch((error) => res.status(400).json({ error }));
         });
@@ -170,6 +170,12 @@ exports.deleteMessage = (req, res, next) => {
       }
     })
     .catch((error) => res.status(500).json({ error }));
+};
+
+exports.deleteMessageWithoutImg = (req, res, next) => {
+  Message.destroy({ where: { id: req.params.id, userId:req.token.userId } })
+  .then(() => res.status(200).json({ message: "Objet supprimé !" }))
+  .catch((error) => res.status(400).json({ error }));
 };
 
 exports.likeMessage = (req, res, next) => {
