@@ -121,8 +121,17 @@ exports.modifyMessage = (req, res, next) => {
   .then((user)=>{
     
     //debut
-    Message.findOne({ where: { id: req.params.id } }).then((message) => {
+    Message.findOne({ where: { id: req.params.id } }).
+    then((message) => {
       if ((message.userId == req.token.userId) || user.isAdmin) {
+        
+        if(req.body.previousUrl)
+        {
+          const filename = message.imageUrl.split("/images/")[1];
+          console.log('aoi');
+          fs.unlink(`images/${filename}`,()=>console.log('image supprimée'));
+        };
+        
         const messageObject = req.file
           ? {
               descriptif: req.body.descriptif,
