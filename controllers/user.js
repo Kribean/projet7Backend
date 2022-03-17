@@ -51,6 +51,7 @@ exports.login = (req, res, next) => {
               nom:user.nom,
               prenom:user.prenom,
               userId: user.id,
+              isAdmin:user.isAdmin,
               token: jwt.sign(
                   {userId:user.id},
                   'secrek',
@@ -95,10 +96,6 @@ exports.deleteProfil = (req, res, next) => {
              id: req.token.userId 
         }
     })
-      .then(result =>{console.log('update réussi');}
-        
-      )
-      .catch(err =>
-        {console.log('update échec');}
-      )    
+    .then((res) => res.status(200).json({ message: 'Profil supprimé !'}))
+    .catch(error => res.status(400).json({ error }));   
 };

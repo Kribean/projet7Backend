@@ -9,12 +9,12 @@ const message = require('./models/Message');
 const commentaire = require('./models/Commentaire');
 const likes = require('./models/Likes');
 
-user.hasMany(message);
+user.hasMany(message,{ onDelete: 'CASCADE' });
 message.belongsTo(user);
-message.hasMany(commentaire);
-user.hasMany(commentaire);
+message.hasMany(commentaire,{ onDelete: 'CASCADE' });
+user.hasMany(commentaire,{ onDelete: 'CASCADE' });
 commentaire.belongsTo(user);
-message.hasMany(likes);
+message.hasMany(likes,{ onDelete: 'CASCADE' });
 user.hasMany(likes);
 
 /*user.hasMany(likes,{

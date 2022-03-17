@@ -23,7 +23,7 @@ const User =require('../models/User') ;
         if(comment.userId==req.token.userId)
         {
         Commentaire.destroy({where: { id: req.params.idComment }})
-        .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
+        .then((res) => res.status(200).json({ message: 'Objet supprimé !'}))
         .catch(error => res.status(400).json({ error }));
       }
     });

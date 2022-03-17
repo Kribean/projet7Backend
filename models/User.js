@@ -27,6 +27,11 @@ const User = sequelize.define("user",{
     motDePasse:{
         type: Sequelize.STRING,
         allowNull:false,
+    },
+    isAdmin:{
+        type: Sequelize.BOOLEAN,
+        defaultValue:false,
+        allowNull:false,
     }
 });
 
