@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require("../util/database");
 
+//Mise en place du modèle de utilisateur comprenant le nom, prenom,pseudonyme, email, mot de passe et un paramètre permettant de savoir si il est admin ou pas 
 const User = sequelize.define("user",{
     id:{
         type: Sequelize.INTEGER,

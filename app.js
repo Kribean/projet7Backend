@@ -17,19 +17,13 @@ commentaire.belongsTo(user);
 message.hasMany(likes,{ onDelete: 'CASCADE' });
 user.hasMany(likes);
 
-/*user.hasMany(likes,{
-  foreignKey: {
-    unique: true
-  }
-});*/
-
 sequelize
 .sync()
 .then((result)=>{
-    //console.log(result);
+   
 })
 .catch((err)=>{
-    //console.log(err);
+    
 });
 
 const userRoutes = require('./routes/user');
@@ -49,6 +43,6 @@ const messageRoutes = require('./routes/message');
 
 //connexion aux routes
 app.use('/api/auth', userRoutes); //routes vers les actions dédiées à l'utilisateur
-app.use('/api/message',messageRoutes); //routes vers les actions dédiées aux sauces
-app.use('/images', express.static(path.join(__dirname, 'images'))); //permet de l'enregistrement des images dans le dossier image
+app.use('/api/message',messageRoutes); //routes vers les actions dédiées aux messages et aux commentaires
+app.use('/images', express.static(path.join(__dirname, 'images'))); //permet l'enregistrement des images dans le dossier image
 module.exports = app;

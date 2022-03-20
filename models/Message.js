@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require("../util/database");
 
+//Mise en place du modèle Messsage. Comprenant un champ descriptif pour le contenu textuel du message, un champ imageUrl comprenant l'adresse de l'image si image et enfin le nombre de like du message
 const Message = sequelize.define("message",{
     id:{
         type: Sequelize.INTEGER,
