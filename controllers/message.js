@@ -67,6 +67,7 @@ exports.getAllMessages = (req, res, next) => {
         ],
       },
     ],
+    order:[['createdAt','DESC']]
   })
     .then((mes) => {
       mes = mes.map((m) => {
